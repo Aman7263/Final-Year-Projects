@@ -2,37 +2,45 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<!-- Proper Responsive Setup -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Excel Clone - Final Year Project</title>
-
+<title>Excel Clone - Gamified Version</title>
 <link rel="stylesheet" href="style.css">
-
-<!-- Chart.js CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <header class="toolbar">
-    <button id="bold"><b>B</b></button>
-    <button id="italic"><i>I</i></button>
-    <button id="underline"><u>U</u></button>
+    <div class="toolbar-left">
+        <button id="bold"><b>B</b></button>
+        <button id="italic"><i>I</i></button>
+        <button id="underline"><u>U</u></button>
+        <button id="addSheet">+ Sheet</button>
+        <button id="saveJSON">Save JSON</button>
+        <button id="exportCSV">Export CSV</button>
+        <button id="sortColumn">Sort A-Z</button>
+        <button id="darkMode">🌙</button>
+        <button id="insertChart">📊</button>
+    </div>
 
-    <button id="addSheet">+ Sheet</button>
-    <button id="saveJSON">Save JSON</button>
-    <button id="exportCSV">Export CSV</button>
-    <button id="sortColumn">Sort A-Z</button>
-    <button id="darkMode">Dark Mode</button>
-    <button id="insertChart">Insert Chart</button>
+    <button class="reset-btn" onclick="resetGame()">
+        <i class="fa-solid fa-rotate-right"></i> Reset
+    </button>
+
+    <div class="stats-panel">
+        <div>XP: <span id="xp">0</span></div>
+        <div>Level: <span id="level">1</span></div>
+        <div>Edits: <span id="editCount">0</span></div>
+        <div class="progress-bar">
+            <div id="progressFill"></div>
+        </div>
+    </div>
 </header>
 
 <section class="formula-bar">
     <input type="text" id="address" disabled>
-    <input type="text" id="formula"
-           placeholder="Enter formula (e.g. =A1+B2 or =SUM(A1:A5))">
+    <input type="text" id="formula" placeholder="Enter formula (e.g. =A1+B2)">
 </section>
 
 <main>
@@ -43,13 +51,34 @@
     <div class="sheets" id="sheetContainer"></div>
 </footer>
 
-<!-- Chart Section -->
 <section class="chart-section">
     <canvas id="chartCanvas"></canvas>
 </section>
 
-<!-- Load JS at end for performance -->
-<script src="app.js"></script>
+ <div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+">
 
+        <button onclick="window.location.href='../../index.html'" style="
+            background: black;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        " onmouseover="this.style.background='#444'" onmouseout="this.style.background='black'">
+
+            ⬅ Back to Home
+
+        </button>
+
+    </div>
+
+<script src="app.js"></script>
 </body>
 </html>

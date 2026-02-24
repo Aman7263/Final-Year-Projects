@@ -1,3 +1,7 @@
+/******************************
+ * EXCEL CLONE - GAMIFIED JS
+ ******************************/
+
 const rows = 50;
 const cols = 26;
 
@@ -6,24 +10,79 @@ let currentSheet = 0;
 let selectedCell = null;
 let chartInstance = null;
 
+/* 🎮 GAME VARIABLES */
+let xp = 0;
+let level = 1;
+let editCount = 0;
+let achievements = {
+    firstFormula:false,
+    firstChart:false,
+    fiveSheets:false
+};
+
 const grid = document.getElementById("grid");
 const addressBar = document.getElementById("address");
 const formulaBar = document.getElementById("formula");
 const sheetContainer = document.getElementById("sheetContainer");
 
-/* STORAGE */
+/* ===============================
+   STORAGE
+================================ */
+
 function autoSave(){
     localStorage.setItem("excelCloneData", JSON.stringify(sheets));
 }
 
 function loadFromStorage(){
     let data = localStorage.getItem("excelCloneData");
+    if(data) sheets = JSON.parse(data);
+}
+
+/* GAME STORAGE */
+function saveGameStats(){
+    localStorage.setItem("excelGameStats",
+        JSON.stringify({xp,level,editCount,achievements}));
+}
+
+function loadGameStats(){
+    let data = localStorage.getItem("excelGameStats");
     if(data){
-        sheets = JSON.parse(data);
+        let parsed = JSON.parse(data);
+        xp = parsed.xp || 0;
+        level = parsed.level || 1;
+        editCount = parsed.editCount || 0;
+        achievements = parsed.achievements || achievements;
     }
 }
 
-/* GRID */
+/* ===============================
+   GAME SYSTEM
+================================ */
+
+function addXP(amount){
+    xp += amount;
+
+    if(xp >= level * 100){
+        level++;
+        alert("🎉 Level Up! You reached Level " + level);
+    }
+
+    updateStats();
+    saveGameStats();
+}
+
+function updateStats(){
+    document.getElementById("xp").innerText = xp;
+    document.getElementById("level").innerText = level;
+    document.getElementById("editCount").innerText = editCount;
+    document.getElementById("progressFill").style.width =
+        (xp % 100) + "%";
+}
+
+/* ===============================
+   GRID
+================================ */
+
 function createGrid(){
     grid.innerHTML="";
 
@@ -58,7 +117,10 @@ function createHeader(text){
     return div;
 }
 
-/* SHEETS */
+/* ===============================
+   SHEETS
+================================ */
+
 function createSheetData(){
     let data=[];
     for(let r=0;r<rows;r++){
@@ -82,18 +144,68 @@ function addSheet(){
     renderSheetTabs();
     loadSheet(sheets.length-1);
     autoSave();
+
+    if(sheets.length === 5 && !achievements.fiveSheets){
+        achievements.fiveSheets = true;
+        alert("🏆 Achievement: Created 5 Sheets!");
+        saveGameStats();
+    }
 }
 
 function renderSheetTabs(){
-    sheetContainer.innerHTML="";
+    sheetContainer.innerHTML = "";
+
     sheets.forEach((_, index)=>{
-        let sheet=document.createElement("div");
-        sheet.className="sheet";
-        sheet.innerText="Sheet "+(index+1);
-        if(index===currentSheet) sheet.classList.add("active-sheet");
-        sheet.onclick=()=>loadSheet(index);
+
+        let sheet = document.createElement("div");
+        sheet.className = "sheet";
+
+        if(index === currentSheet)
+            sheet.classList.add("active-sheet");
+
+        // 📌 Sheet Name
+        let name = document.createElement("span");
+        name.innerText = "Sheet " + (index+1);
+        name.onclick = () => loadSheet(index);
+        name.style.cursor = "pointer";
+
+        // 🗑 Delete Icon
+        let deleteIcon = document.createElement("span");
+        deleteIcon.innerHTML = " 🗑";
+        deleteIcon.style.color = "red";
+        deleteIcon.style.marginLeft = "8px";
+        deleteIcon.style.cursor = "pointer";
+
+        deleteIcon.onclick = (e)=>{
+            e.stopPropagation();  // Prevent sheet click
+            deleteSheet(index);
+        };
+
+        sheet.appendChild(name);
+        sheet.appendChild(deleteIcon);
+
         sheetContainer.appendChild(sheet);
     });
+}
+
+function deleteSheet(index){
+
+    if(sheets.length === 1){
+        alert("At least one sheet must exist.");
+        return;
+    }
+
+    if(!confirm("Delete this sheet?")) return;
+
+    sheets.splice(index,1);
+
+    if(currentSheet >= sheets.length){
+        currentSheet = sheets.length - 1;
+    }
+
+    renderSheetTabs();
+    loadSheet(currentSheet);
+    autoSave();
 }
 
 function loadSheet(index){
@@ -101,6 +213,7 @@ function loadSheet(index){
     renderSheetTabs();
 
     let data=sheets[index];
+
     document.querySelectorAll(".cell").forEach(cell=>{
         let r=cell.dataset.row;
         let c=cell.dataset.col;
@@ -113,16 +226,22 @@ function loadSheet(index){
     });
 }
 
-/* CELL EVENTS */
+/* ===============================
+   CELL EVENTS
+================================ */
+
 function onCellClick(e){
     if(selectedCell) selectedCell.classList.remove("active");
+
     selectedCell=e.target;
     selectedCell.classList.add("active");
 
     let r=selectedCell.dataset.row;
     let c=selectedCell.dataset.col;
 
-    addressBar.value=String.fromCharCode(65+Number(c))+(Number(r)+1);
+    addressBar.value=
+        String.fromCharCode(65+Number(c))+(Number(r)+1);
+
     formulaBar.value=sheets[currentSheet][r][c].formula;
 }
 
@@ -131,37 +250,51 @@ function onCellBlur(e){
     let c=e.target.dataset.col;
     let input=e.target.innerText.trim();
 
-    if(/^[0-9+\-*/ ().]+$/.test(input) && /[+\-*/]/.test(input)){
-        try{
-            input=eval(input);
-            e.target.innerText=input;
-        }catch{}
-    }
-
     sheets[currentSheet][r][c].value=input;
     sheets[currentSheet][r][c].formula="";
+
+    editCount++;
+    addXP(5);
+
     autoSave();
 }
 
-/* FORMULA */
+/* ===============================
+   FORMULA SYSTEM
+================================ */
+
 formulaBar.addEventListener("keydown",(e)=>{
     if(e.key==="Enter" && selectedCell){
+
         let formula=formulaBar.value;
+
         if(formula.startsWith("=")){
+
             let value=evaluateFormula(formula.substring(1));
 
             let r=selectedCell.dataset.row;
             let c=selectedCell.dataset.col;
 
             selectedCell.innerText=value;
+
             sheets[currentSheet][r][c].value=value;
             sheets[currentSheet][r][c].formula=formula;
+
+            addXP(20);
+
+            if(!achievements.firstFormula){
+                achievements.firstFormula=true;
+                alert("🏆 Achievement: First Formula Used!");
+            }
+
             autoSave();
+            saveGameStats();
         }
     }
 });
 
 function evaluateFormula(formula){
+
     if(formula.startsWith("SUM(")){
         let range=formula.substring(4,formula.length-1);
         let [start,end]=range.split(":");
@@ -172,6 +305,7 @@ function evaluateFormula(formula){
         let endRow=parseInt(end.slice(1))-1;
 
         let sum=0;
+
         for(let r=startRow;r<=endRow;r++){
             for(let c=startCol;c<=endCol;c++){
                 sum+=Number(sheets[currentSheet][r][c].value)||0;
@@ -181,6 +315,7 @@ function evaluateFormula(formula){
     }
 
     let tokens=formula.split(/([+\-*/])/);
+
     tokens=tokens.map(token=>{
         if(/[A-Z][0-9]+/.test(token)){
             let col=token.charCodeAt(0)-65;
@@ -193,7 +328,10 @@ function evaluateFormula(formula){
     return eval(tokens.join(""));
 }
 
-/* FORMATTING */
+/* ===============================
+   FORMATTING
+================================ */
+
 ["bold","italic","underline"].forEach(id=>{
     document.getElementById(id).onclick=()=>{
         if(!selectedCell) return;
@@ -204,30 +342,43 @@ function evaluateFormula(formula){
 
         data[id]=!data[id];
 
-        if(id==="bold") selectedCell.style.fontWeight=data[id]?"bold":"normal";
-        if(id==="italic") selectedCell.style.fontStyle=data[id]?"italic":"normal";
-        if(id==="underline") selectedCell.style.textDecoration=data[id]?"underline":"none";
+        if(id==="bold")
+            selectedCell.style.fontWeight=data[id]?"bold":"normal";
+
+        if(id==="italic")
+            selectedCell.style.fontStyle=data[id]?"italic":"normal";
+
+        if(id==="underline")
+            selectedCell.style.textDecoration=data[id]?"underline":"none";
 
         autoSave();
     };
 });
 
-/* SAVE JSON */
+/* ===============================
+   EXPORT FEATURES
+================================ */
+
 document.getElementById("saveJSON").onclick=()=>{
-    const blob=new Blob([JSON.stringify(sheets,null,2)],{type:"application/json"});
+    const blob=new Blob(
+        [JSON.stringify(sheets,null,2)],
+        {type:"application/json"}
+    );
+
     const link=document.createElement("a");
     link.href=URL.createObjectURL(blob);
     link.download="excel-data.json";
     link.click();
 };
 
-/* EXPORT CSV */
 document.getElementById("exportCSV").onclick=()=>{
     let sheet=sheets[currentSheet];
     let csv="";
+
     sheet.forEach(row=>{
         csv+=row.map(cell=>`"${cell.value}"`).join(",")+"\n";
     });
+
     const blob=new Blob([csv],{type:"text/csv"});
     const link=document.createElement("a");
     link.href=URL.createObjectURL(blob);
@@ -235,24 +386,77 @@ document.getElementById("exportCSV").onclick=()=>{
     link.click();
 };
 
-/* SORT */
-document.getElementById("sortColumn").onclick=()=>{
-    if(!selectedCell) return;
-    let col=selectedCell.dataset.col;
-    sheets[currentSheet].sort((a,b)=>{
-        return (a[col].value||"").toString().localeCompare((b[col].value||"").toString());
+/* ===============================
+   SORT
+================================ */
+
+let sortAscending = true; // toggle state
+
+document.getElementById("sortColumn").onclick = () => {
+
+    if (!selectedCell) {
+        alert("Please select a cell in the column you want to sort.");
+        return;
+    }
+
+    let col = parseInt(selectedCell.dataset.col);
+    let sheet = sheets[currentSheet];
+
+    // Separate empty rows to keep them at bottom
+    let filledRows = [];
+    let emptyRows = [];
+
+    sheet.forEach(row => {
+        if (row[col].value === "" || row[col].value == null) {
+            emptyRows.push(row);
+        } else {
+            filledRows.push(row);
+        }
     });
+
+    // Detect numeric column
+    let isNumeric = filledRows.every(row => !isNaN(row[col].value));
+
+    filledRows.sort((a, b) => {
+
+        let valA = a[col].value;
+        let valB = b[col].value;
+
+        if (isNumeric) {
+            return sortAscending
+                ? Number(valA) - Number(valB)
+                : Number(valB) - Number(valA);
+        } else {
+            return sortAscending
+                ? valA.toString().localeCompare(valB.toString())
+                : valB.toString().localeCompare(valA.toString());
+        }
+    });
+
+    // Combine sorted + empty rows
+    sheets[currentSheet] = [...filledRows, ...emptyRows];
+
+    // Toggle A-Z / Z-A
+    sortAscending = !sortAscending;
+
     loadSheet(currentSheet);
     autoSave();
 };
 
-/* DARK MODE */
+/* ===============================
+   DARK MODE
+================================ */
+
 document.getElementById("darkMode").onclick=()=>{
     document.body.classList.toggle("dark");
 };
 
-/* CHART */
+/* ===============================
+   CHART
+================================ */
+
 document.getElementById("insertChart").onclick=()=>{
+
     if(chartInstance) chartInstance.destroy();
 
     let labels=[];
@@ -263,7 +467,8 @@ document.getElementById("insertChart").onclick=()=>{
         data.push(Number(sheets[currentSheet][i][0].value)||0);
     }
 
-    chartInstance=new Chart(document.getElementById("chartCanvas"),{
+    chartInstance=new Chart(
+        document.getElementById("chartCanvas"),{
         type:"bar",
         data:{
             labels:labels,
@@ -273,10 +478,68 @@ document.getElementById("insertChart").onclick=()=>{
             }]
         }
     });
+
+    addXP(30);
+
+    if(!achievements.firstChart){
+        achievements.firstChart=true;
+        alert("🏆 Achievement: First Chart Created!");
+    }
+
+    saveGameStats();
 };
 
-/* INIT */
+/* ===============================
+   RESET GAME
+================================ */
+
+function resetGame(){
+
+    if(!confirm("⚠ Are you sure?\nThis will delete ALL sheets, XP, levels and data.")){
+        return;
+    }
+
+    /* 🔥 Clear Storage */
+    localStorage.removeItem("excelCloneData");
+    localStorage.removeItem("excelGameStats");
+
+    /* 🔥 Reset Variables */
+    sheets = [];
+    currentSheet = 0;
+    xp = 0;
+    level = 1;
+    editCount = 0;
+    achievements = {
+        firstFormula:false,
+        firstChart:false,
+        fiveSheets:false
+    };
+
+    /* 🔥 Destroy Chart if exists */
+    if(chartInstance){
+        chartInstance.destroy();
+        chartInstance = null;
+    }
+
+    /* 🔥 Create Fresh Sheet */
+    sheets.push(createSheetData());
+
+    /* 🔥 Re-render Everything */
+    renderSheetTabs();
+    loadSheet(0);
+    updateStats();
+    autoSave();
+    saveGameStats();
+
+    alert("✅ Game Reset Successfully!");
+}
+
+/* ===============================
+   INIT
+================================ */
+
 loadFromStorage();
+loadGameStats();
 createGrid();
 
 if(sheets.length===0){
@@ -285,5 +548,6 @@ if(sheets.length===0){
 
 renderSheetTabs();
 loadSheet(0);
+updateStats();
 
 document.getElementById("addSheet").onclick=addSheet;

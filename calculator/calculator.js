@@ -1,24 +1,21 @@
 let display = document.getElementById("display");
+let historyDiv = document.getElementById("history");
+
 let currentInput = "";
 
 function updateDisplay() {
     display.textContent = currentInput || "0";
 }
 
-function appendNumber(number) {
-    currentInput += number;
+function appendNumber(num) {
+    currentInput += num;
     updateDisplay();
 }
 
-function appendOperator(operator) {
-
-    if (currentInput === "") return;
-
-    let lastChar = currentInput.slice(-1);
-
-    if ("+-*/".includes(lastChar)) return;
-
-    currentInput += operator;
+function appendOperator(op) {
+    let last = currentInput.slice(-1);
+    if ("+-*/".includes(last)) return;
+    currentInput += op;
     updateDisplay();
 }
 
@@ -32,43 +29,37 @@ function deleteLast() {
     updateDisplay();
 }
 
-function calculate() {
-
+function percentage() {
     try {
-        currentInput = eval(currentInput).toString();
-    }
-    catch {
-        currentInput = "";
-        alert("Invalid calculation");
-    }
+        currentInput = (eval(currentInput) / 100).toString();
+        updateDisplay();
+    } catch {}
+}
 
+function square() {
+    try {
+        currentInput = Math.pow(eval(currentInput), 2).toString();
+        updateDisplay();
+    } catch {}
+}
+
+function squareRoot() {
+    try {
+        currentInput = Math.sqrt(eval(currentInput)).toString();
+        updateDisplay();
+    } catch {}
+}
+
+function calculate() {
+    try {
+        let result = eval(currentInput);
+        historyDiv.innerHTML += `<div>${currentInput} = ${result}</div>`;
+        currentInput = result.toString();
+    } catch {
+        currentInput = "";
+        alert("Invalid Calculation");
+    }
     updateDisplay();
 }
 
-/* Keyboard support */
-
-document.addEventListener("keydown", function(event) {
-
-    let key = event.key;
-
-    if (!isNaN(key) || key === ".") {
-        appendNumber(key);
-    }
-
-    else if (key === "+" || key === "-" || key === "*" || key === "/") {
-        appendOperator(key);
-    }
-
-    else if (key === "Enter") {
-        calculate();
-    }
-
-    else if (key === "Backspace") {
-        deleteLast();
-    }
-
-    else if (key === "Escape") {
-        clearDisplay();
-    }
-
-});
+updateDisplay();

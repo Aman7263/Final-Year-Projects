@@ -2,39 +2,114 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kanban Board</title>
+    <title>Gamified Kanban Board</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="kanban.css">
 </head>
 <body>
 
-<h1>Kanban Board</h1>
+<h1>🎮 Gamified Kanban Board</h1>
+<div class="top-bar">
+    <h3 id="scoreDisplay">🏆 Score: 0</h3>
+
+    <button class="reset-btn" onclick="resetGame()">
+        <i class="fa-solid fa-rotate-right"></i> Reset
+    </button>
+</div>
 
 <div class="board">
 
-    <!-- Todo -->
-    <div class="column" data-column="todo">
-        <h2>Todo</h2>
-        <button onclick="addTask('todo')">+ Add Task</button>
+    <div class="column">
+        <h2>📌 Todo</h2>
+        <button onclick="openModal('todo')">
+            <i class="fa-solid fa-plus"></i> Add Task
+        </button>
         <div class="task-list" id="todo"></div>
     </div>
 
-    <!-- In Progress -->
-    <div class="column" data-column="progress">
-        <h2>In Progress</h2>
-        <button onclick="addTask('progress')">+ Add Task</button>
+    <div class="column">
+        <h2>🚀 In Progress</h2>
+        <button onclick="openModal('progress')">
+            <i class="fa-solid fa-plus"></i> Add Task
+        </button>
         <div class="task-list" id="progress"></div>
     </div>
 
-    <!-- Done -->
-    <div class="column" data-column="done">
-        <h2>Done</h2>
-        <button onclick="addTask('done')">+ Add Task</button>
+    <div class="column">
+        <h2>✅ Done</h2>
         <div class="task-list" id="done"></div>
     </div>
 
 </div>
 
-<script src="kanban.js"></script>
+<!-- Saved Tasks Section -->
+<div class="saved-section">
+    <h2>📁 Completed & Saved Notes</h2>
+    <div id="savedTasks"></div>
+</div>
 
+<!-- Add Task Modal -->
+<div id="taskModal" class="modal">
+    <div class="modal-content">
+        <h3>Add New Task</h3>
+
+        <input type="text" id="taskInput" placeholder="Enter task..." />
+
+        <select id="prioritySelect">
+            <option value="high">High Priority</option>
+            <option value="medium" selected>Medium Priority</option>
+            <option value="low">Low Priority</option>
+        </select>
+
+        <div class="modal-actions">
+            <button onclick="addTask()">Add Task</button>
+            <button class="cancel" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Remark Modal -->
+<div id="remarkModal" class="modal">
+    <div class="modal-content">
+        <h3>Save Remark</h3>
+
+        <textarea id="remarkInput" placeholder="Enter your remark..." rows="4"></textarea>
+
+        <div class="modal-actions">
+            <button onclick="saveRemark()">Save</button>
+            <button class="cancel" onclick="closeRemarkModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+ <div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+">
+
+        <button onclick="window.location.href='../../index.html'" style="
+            background: black;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        " onmouseover="this.style.background='#444'" onmouseout="this.style.background='black'">
+
+            ⬅ Back to Home
+
+        </button>
+
+    </div>
+
+<script src="kanban.js"></script>
 </body>
 </html>

@@ -1,21 +1,61 @@
 body{
     margin:0;
     font-family: Arial;
+    transition:0.3s;
 }
 
+/* Toolbar */
 .toolbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    justify-content:space-between;
     padding:10px;
     background:#f3f3f3;
+    flex-wrap:wrap;
+}
+
+.toolbar-left{
     display:flex;
     flex-wrap:wrap;
     gap:5px;
 }
 
 button{
-    padding:6px 12px;
+    padding:8px 12px;
     cursor:pointer;
+    border:none;
+    background:#e0e0e0;
+    border-radius:6px;
 }
 
+button:hover{
+    background:#d0d0d0;
+}
+
+/* Stats */
+.stats-panel{
+    font-size:12px;
+    min-width:150px;
+}
+
+.progress-bar{
+    width:120px;
+    height:8px;
+    background:#ccc;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:4px;
+}
+
+#progressFill{
+    height:100%;
+    width:0%;
+    background:#4caf50;
+}
+
+/* Formula */
 .formula-bar{
     display:flex;
 }
@@ -27,20 +67,21 @@ button{
 
 #formula{
     flex:1;
-    padding:5px;
+    padding:6px;
 }
 
+/* Grid */
 #grid{
     display:grid;
     grid-template-columns:40px repeat(26, minmax(100px,1fr));
     overflow:auto;
     width:100%;
-    max-height:65vh;
+    max-height:60vh;
 }
 
 .cell,.header{
     border:1px solid #ccc;
-    height:28px;
+    height:30px;
     padding:4px;
     box-sizing:border-box;
 }
@@ -49,7 +90,6 @@ button{
     background:#eaeaea;
     font-weight:bold;
     text-align:center;
-    position:relative;
 }
 
 .cell{
@@ -60,6 +100,7 @@ button{
     border:2px solid green;
 }
 
+/* Sheets */
 .sheets{
     padding:10px;
     background:#f3f3f3;
@@ -68,7 +109,7 @@ button{
 
 .sheet{
     display:inline-block;
-    padding:5px 12px;
+    padding:6px 15px;
     margin-right:5px;
     background:#ddd;
     cursor:pointer;
@@ -80,14 +121,15 @@ button{
     font-weight:bold;
 }
 
+/* Chart */
 #chartCanvas{
     width:100%;
-    max-width:800px;
+    max-width:700px;
     margin:20px auto;
     display:block;
 }
 
-/* DARK MODE */
+/* Dark Mode */
 .dark{
     background:#1e1e1e;
     color:white;
@@ -102,10 +144,39 @@ button{
     background:#2b2b2b;
 }
 
-/* MOBILE */
+.sheet span:last-child:hover{
+    transform: scale(1.2);
+}
+
+.reset-btn {
+    background: black;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: 0.2s ease;
+}
+
+.reset-btn:hover {
+    background: #444;
+    transform: scale(1.05);
+}
+
+.reset-btn i {
+    margin-right: 5px;
+}
+
+/* Mobile */
 @media (max-width:768px){
     button{
         flex:1 1 45%;
         font-size:12px;
+    }
+    .stats-panel{
+        width:100%;
+        margin-top:8px;
     }
 }

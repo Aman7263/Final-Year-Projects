@@ -2,44 +2,80 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Student Management System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Task & Survey System</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="student.css">
 </head>
 <body>
 
 <div class="container">
 
-<h1>Student Management System</h1>
+<h1>🎓 Student Task & Survey System</h1>
+
+<div class="stats">
+<div>👥 Students: <span id="totalStudents">0</span></div>
+<div>💰 Fees Paid: <span id="totalFees">0</span></div>
+<div>📋 Tasks Done: <span id="totalTasks">0</span></div>
+<div>📝 Surveys Completed: <span id="totalSurveys">0</span></div>
+<button class="reset-btn" onclick="resetGame()">
+        <i class="fa-solid fa-rotate-right"></i> Reset
+    </button>
+</div>
 
 <div class="form">
-
 <input type="text" id="name" placeholder="Student Name">
 <input type="text" id="roll" placeholder="Roll Number">
 <input type="text" id="course" placeholder="Course">
-
-<button onclick="addStudent()" id="addBtn">Add Student</button>
-<button onclick="updateStudent()" id="updateBtn" style="display:none;">Update Student</button>
-
+<button onclick="addStudent()" id="addBtn">➕ Add</button>
+<button onclick="updateStudent()" id="updateBtn" style="display:none;">🔄 Update</button>
 </div>
 
-<input type="text" id="search" placeholder="Search student..." onkeyup="searchStudent()">
+<input type="text" id="search" placeholder="🔍 Search..." onkeyup="searchStudent()">
 
+<div class="table-wrapper">
 <table>
-
 <thead>
 <tr>
 <th>Name</th>
 <th>Roll</th>
 <th>Course</th>
+<th>💰 Fee</th>
+<th>📋 Task</th>
+<th>📊 Survey</th>
 <th>Actions</th>
 </tr>
 </thead>
-
 <tbody id="studentList"></tbody>
-
 </table>
+</div>
 
 </div>
+
+
+ <div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+">
+
+        <button onclick="window.location.href='../../index.html'" style="
+            background: black;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        " onmouseover="this.style.background='#444'" onmouseout="this.style.background='black'">
+
+            ⬅ Back to Home
+
+        </button>
+
+    </div>
 
 <script src="student.js"></script>
 

@@ -1,14 +1,16 @@
 body {
     font-family: Arial;
-    background: linear-gradient(to right, #4facfe, #00f2fe);
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    margin: 0;
+    padding: 20px;
 }
 
 .calendar-container {
-    width: 400px;
+    max-width: 600px;
+    margin: auto;
     background: white;
-    margin: 50px auto;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 20px;
+    border-radius: 12px;
 }
 
 .header {
@@ -17,11 +19,13 @@ body {
     align-items: center;
 }
 
-.header button {
-    padding: 5px 10px;
-    border: none;
+.nav-group button {
     background: #4facfe;
     color: white;
+    border: none;
+    padding: 6px 10px;
+    margin: 2px;
+    border-radius: 6px;
     cursor: pointer;
 }
 
@@ -32,13 +36,13 @@ body {
 }
 
 .days div {
-    font-weight: bold;
     text-align: center;
+    font-weight: bold;
 }
 
 .dates div {
     border: 1px solid #ddd;
-    height: 60px;
+    min-height: 80px;
     padding: 5px;
     cursor: pointer;
     position: relative;
@@ -49,28 +53,83 @@ body {
 }
 
 .event {
-    font-size: 10px;
-    background: #4facfe;
+    font-size: 11px;
+    padding: 3px;
+    border-radius: 4px;
+    margin-top: 4px;
     color: white;
-    padding: 2px;
-    margin-top: 2px;
-    border-radius: 3px;
+    cursor: pointer;
 }
+
+.high { background: #ff4d4d; }
+.medium { background: #ffb84d; }
+.low { background: #4CAF50; }
 
 .modal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
     background: white;
+    padding: 20px;
     width: 300px;
-    margin: 150px auto;
-    padding: 15px;
-    border-radius: 8px;
+    border-radius: 10px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+    width: 100%;
+    margin: 8px 0;
+    padding: 6px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-actions button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #4facfe;
+    color: white;
+}
+
+.cancel {
+    background: gray;
+}
+
+.reset-btn {
+    background: black;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: 0.2s ease;
+}
+
+.reset-btn:hover {
+    background: #444;
+    transform: scale(1.05);
+}
+
+.reset-btn i {
+    margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+    .calendar-container {
+        width: 95%;
+    }
 }

@@ -1,46 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Professional Calculator</title>
-<link rel="stylesheet" href="calculator.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Calculator</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="calculator.css">
 </head>
+
 <body>
 
-<div class="calculator">
+    <div class="app-container">
 
-    <div class="display" id="display">0</div>
+        <!-- LEFT INFO PANEL -->
+        <div class="info-panel">
+            <h2>🧮 Smart Calculator</h2>
 
-    <div class="buttons">
+            <p><strong>➕ Basic Operations:</strong> Add, Subtract, Multiply, Divide</p>
+            <p><strong>📊 Advanced:</strong> Percentage, Square, Square Root</p>
+            <p><strong>📜 History:</strong> View recent calculations</p>
+            <p><strong>⌨ Support:</strong> Fully responsive design</p>
 
-        <button onclick="clearDisplay()" class="clear">C</button>
-        <button onclick="deleteLast()">⌫</button>
-        <button onclick="appendOperator('/')">÷</button>
-        <button onclick="appendOperator('*')">×</button>
+            <h3>📜 History</h3>
+            <div id="history"></div>
+        </div>
 
-        <button onclick="appendNumber('7')">7</button>
-        <button onclick="appendNumber('8')">8</button>
-        <button onclick="appendNumber('9')">9</button>
-        <button onclick="appendOperator('-')">−</button>
+        <!-- CALCULATOR PANEL -->
+        <div class="calculator">
 
-        <button onclick="appendNumber('4')">4</button>
-        <button onclick="appendNumber('5')">5</button>
-        <button onclick="appendNumber('6')">6</button>
-        <button onclick="appendOperator('+')">+</button>
+            <div class="display" id="display">0</div>
 
-        <button onclick="appendNumber('1')">1</button>
-        <button onclick="appendNumber('2')">2</button>
-        <button onclick="appendNumber('3')">3</button>
-        <button onclick="calculate()" class="equals">=</button>
+            <div class="buttons">
+                <button onclick="clearDisplay()" class="clear">C</button>
+                <button onclick="deleteLast()">⌫</button>
+                <button onclick="percentage()">%</button>
+                <button onclick="appendOperator('/')">÷</button>
 
-        <button onclick="appendNumber('0')" class="zero">0</button>
-        <button onclick="appendNumber('.')">.</button>
+                <button onclick="appendNumber('7')">7</button>
+                <button onclick="appendNumber('8')">8</button>
+                <button onclick="appendNumber('9')">9</button>
+                <button onclick="appendOperator('*')">×</button>
+
+                <button onclick="appendNumber('4')">4</button>
+                <button onclick="appendNumber('5')">5</button>
+                <button onclick="appendNumber('6')">6</button>
+                <button onclick="appendOperator('-')">−</button>
+
+                <button onclick="appendNumber('1')">1</button>
+                <button onclick="appendNumber('2')">2</button>
+                <button onclick="appendNumber('3')">3</button>
+                <button onclick="appendOperator('+')">+</button>
+
+                <button onclick="appendNumber('0')" class="zero">0</button>
+                <button onclick="appendNumber('.')">.</button>
+                <button onclick="square()">x²</button>
+                <button onclick="squareRoot()">√</button>
+
+                <button onclick="calculate()" class="equals">=</button>
+            </div>
+
+        </div>
 
     </div>
 
-</div>
+    <div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+">
 
-<script src="calculator.js"></script>
+        <button onclick="window.location.href='../../index.html'" style="
+            background: black;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        " onmouseover="this.style.background='#444'" onmouseout="this.style.background='black'">
 
+            ⬅ Back to Home
+
+        </button>
+
+    </div>
+
+    <script src="calculator.js"></script>
 </body>
+
 </html>
