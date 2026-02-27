@@ -395,6 +395,77 @@ a{
     }
 }
 
+.vid-list{
+  transition:0.3s;
+}
+.vid-list:hover{
+  transform:translateY(-6px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.content-view{
+  animation:fadeIn .4s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.plublisher button{
+  transition:.3s;
+}
+.plublisher button:hover{
+  transform:scale(1.05);
+  box-shadow:0 4px 12px rgba(255,0,0,0.4);
+}
+
+/* ================= DARK MODE CLEAN VERSION ================= */
+
+.dark-mode {
+  background:#0f0f0f;
+  color:#fff;
+}
+
+.dark-mode header,
+.dark-mode .sidebar {
+  background:#181818;
+}
+
+.dark-mode .container {
+  background:#0f0f0f;
+}
+
+.dark-mode .vid-info a,
+.dark-mode .plublisher div p {
+  color:#fff;
+}
+
+.dark-mode .vid-info p,
+.dark-mode .plublisher div span,
+.dark-mode .play-video-info p,
+.dark-mode .vid-description p,
+.dark-mode .vid-description h4 {
+  color:#aaa;
+}
+
+/* Protect images */
+.thumbnail1,
+.banner img {
+  filter:none !important;
+}
+
+video.thumbnail1,
+.small-thumb-video {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.small-thumb-video {
+  height: 120px;
+}
+
 /*------- for footer ------*/
 .foot{
     background-color: #000;
@@ -404,4 +475,62 @@ a{
     margin-left: 50%;
     color: white;
     font-size: small;
+}
+
+/* ================= PASSWORD LOCK ================= */
+
+#lockScreen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999999;
+}
+
+.lock-box{
+    background:#1e293b;
+    padding:30px;
+    border-radius:10px;
+    width:300px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+.lock-box h2{
+    color:#fff;
+    margin-bottom:15px;
+}
+
+.lock-box input{
+    width:100%;
+    padding:10px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:6px;
+    outline:none;
+}
+
+.lock-box button{
+    width:100%;
+    padding:10px;
+    background:red;
+    border:none;
+    color:#fff;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.lock-box button:hover{
+    background:darkred;
+}
+
+#errorMsg{
+    color:red;
+    margin-top:10px;
 }

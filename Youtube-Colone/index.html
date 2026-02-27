@@ -1,189 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VidTube - YouTube Clone</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
+
 <body>
 
-
-<header class="whole">
-<!-- defining left part of the header -->
-    <div class="left whole">  <!-- defining two class at a time left & whole -->
-        <img class="menu-icon" src="./photo/menu.png" title="menu">
-        <img class="vt" src="./photo/logo.png">
-    </div>
-<!-- defining middle part of the header -->
-    <div class="mid whole">
-        <div class="search-box whole">
-           <input type="search" placeholder="search">
-           <img src="./photo/search.png" alt="search">
-        </div>
-        <img class="mic" src="./photo/voice-search.png" alt="voice search">
-    </div>
-<!-- defining right part of the header -->
-    <div class="right whole">
-        <img src="./photo/upload.png" alt="upload">
-        <img src="./photo/cast.png" alt="cast">
-        <img src="./photo/notification.png" alt="notification">
-        <img class="pic" src="./photo/Jack.png"  alt="logo">
-    </div>
-</header>
-
-<!--side bar (left)-->
-<div class="sidebar">
-    <div class="shortcut">
-        <a href=""><img src="./photo/home.png"><p>Home</p></a>
-        <a href=""><img src="./photo/explore.png"><p>Explore</p></a>
-        <a href=""><img src="./photo/subscriprion.png"><p>Subscriprion</p></a>
-        <a href=""><img src="./photo/library.png"><p>Library</p></a>
-        <a href=""><img src="./photo/history.png"><p>History</p></a>
-        <a href=""><img src="./photo/playlist.png"><p>Playlist</p></a>
-        <a href=""><img src="./photo/messages.png"><p>Messages</p></a>
-        <a href=""><img src="./photo/show-more.png"><p>Show More</p></a>
-    <hr>
-    </div>
-
-    <div class="sub-list">
-        <h3> SUBSCRIBED </h3>
-            <a href=""> <img src="./photo/Jack.png"><p>Aman Aryan</p></a>
-            <a href="https://www.youtube.com/channel/UCa2xrvjDt5txnsoj8xJ7_OA"> <img src="./photo/simon.png"><p>Sarcasm Editx</p></a>
-            <a href="https://www.youtube.com/channel/UCN5Zitz1NnyNPqx_Lj-nrvw"> <img src="./photo/tom.png"><p>Pen or Pain1</p></a>
-            <a href=""> <img src="./photo/megan.png"><p>Sezmay Alfaaz</p></a>
-            <a href=""> <img src="./photo/cameron.png"><p>All My Channel</p></a>
-    </div>
+  <!-- ================= PASSWORD LOCK SCREEN ================= -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <h2>Enter Access Code</h2>
+    <input type="password" id="accessCode" placeholder="Enter password">
+    <button id="unlockBtn">Unlock</button>
+    <p id="errorMsg"></p>
+  </div>
 </div>
 
+<header class="whole header">
+  <div class="left whole">
+    <img class="menu-icon" src="photo/menu.png" alt="menu">
+    <img class="vt" src="photo/logo.png" alt="VidTube">
+  </div>
 
-<!--------Main Body----->
-
-<div class="container">
-    <div class="banner">
-       <a href="https://www.youtube.com/channel/UCa2xrvjDt5txnsoj8xJ7_OA"> <img src="./photo/banner.png" alt="banner"></a>
+  <div class="mid whole">
+    <div class="search-box whole">
+      <input type="search" placeholder="Search" id="searchInput">
+      <img src="photo/search.png" alt="search">
     </div>
+    <img class="mic" src="photo/voice-search.png" alt="voice">
+  </div>
 
-    <div class="list-container">
+  <div class="right whole">
+    <img src="photo/upload.png">
+    <img src="photo/cast.png">
+    <img src="photo/notification.png">
+    <img class="pic" src="photo/Jack.png">
+    <button id="themeToggle"><i class="fas fa-moon"></i></button>
+  </div>
+</header>
 
-        <!-------- thumbnail adding start ------->
-        <div class="vid-list">
-            <a href="video.html">   <img src="./photo/22.jpg" class ="thumbnail1"></a>
-               <div class="whole">
-                    <img src="./photo/Jack.png">
-                      <div class="vid-info">
-                          <a href="video.html">Song Meme Compilation 🔥// SARCASM EDITX 😎// Lyrics Crossover Meme 01</a>
-                          <p> Sarcasm Editx</p>
-                          <p>15k views &bull; 2days</p>
-                      </div>
+<div class="sidebar" id="sidebar">
+  <div class="shortcut">
+    <a href="index.html"><img src="photo/home.png"><p>Home</p></a>
+    <a href="#"><img src="photo/explore.png"><p>Explore</p></a>
+    <a href="#"><img src="photo/subscriprion.png"><p>Subscriptions</p></a>
+    <a href="#"><img src="photo/library.png"><p>Library</p></a>
+    <a href="#"><img src="photo/history.png"><p>History</p></a>
+    <hr>
+  </div>
+
+  <div class="sub-list">
+    <h3>SUBSCRIPTIONS</h3>
+    <a href="#"><img src="photo/Jack.png"><p>Aman Aryan</p></a>
+    <a href="#"><img src="photo/simon.png"><p>Sarcasm Editx</p></a>
+    <a href="#"><img src="photo/tom.png"><p>Pen or Pain1</p></a>
+  </div>
+</div>
+
+<div class="container" id="mainContainer">
+  <div id="homeView" class="content-view">
+    <div class="banner">
+      <img src="photo/banner.png">
+    </div>
+    <div class="list-container" id="videoList"></div>
+  </div>
+
+  <div id="videoView" class="content-view" style="display:none;">
+    <div class="play-container">
+      <div class="row">
+
+        <div class="play-video">
+          <video id="mainVideo" controls autoplay>
+            <source id="videoSource" src="" type="video/mp4">
+          </video>
+
+          <div class="tags" id="tags"></div>
+          <h3 id="videoTitle"></h3>
+
+          <div class="play-video-info">
+            <p id="viewsDate"></p>
+            <div>
+              <a href="#" id="likeBtn">
+                <img src="photo/like.png">
+                <span id="likeCount">5000</span>
+              </a>
+              <a href="#" id="dislikeBtn">
+                <img src="photo/dislike.png"><span>125</span>
+              </a>
+              <a href="#"><img src="photo/share.png">Share</a>
+              <a href="#"><img src="photo/save.png">Save</a>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="plublisher">
+            <div>
+              <img src="photo/Jack.png">
+              <div>
+                <p>Sarcasm Editx</p>
+                <span>10K subscribers</span>
               </div>
+            </div>
+            <button id="subscribeBtn">Subscribe</button>
+          </div>
+
+          <div class="vid-description">
+            <p>• This channel is only for entertainment purposes...</p>
+            <p>• Subscribe for more funny meme crossovers!</p>
+            <hr>
+            <h4 id="commentCount">150 comments</h4>
+            <div class="add-comment">
+              <img src="photo/Jack.png">
+              <input type="text" id="commentInput" placeholder="Add a comment...">
+              <button id="postComment">Post</button>
+            </div>
+            <div id="commentSection"></div>
+          </div>
         </div>
 
-
-        <div class="vid-list">
-            <a href="video 1.html"><img src="./photo/27.jpg" class ="thumbnail1"></a>
-               <div class="whole">
-                    <img src="./photo/Jack.png">
-                      <div class="vid-info">
-                          <a href="">Song Meme Compilation 🔥// SARCASM EDITX 😎// Lyrics Crossover Meme 02</a>
-                          <p> Sarcasm Editx</p>
-                          <p>15k views &bull; 2days</p>
-                      </div>
-              </div>
-        </div>
-
-
-        <div class="vid-list">
-            <a href="video 2.html"><img src="./photo/28.jpg" class ="thumbnail1"></a>
-               <div class="whole">
-                    <img src="./photo/Jack.png">
-                      <div class="vid-info">
-                          <a href="">Song Meme Compilation 🔥// SARCASM EDITX 😎// Lyrics Crossover Meme 03</a>
-                          <p> Sarcasm Editx</p>
-                          <p>15k views &bull; 2days</p>
-                      </div>
-              </div>
-        </div>
-
-
-        <div class="vid-list">
-            <a href="video 3.html"><img src="./photo/37.jpg" class ="thumbnail1"></a>
-               <div class="whole">
-                    <img src="./photo/Jack.png">
-                      <div class="vid-info">
-                          <a href="">Song Meme Compilation 🔥// SARCASM EDITX 😎// Lyrics Crossover Meme 04</a>
-                          <p> Sarcasm Editx</p>
-                          <p>15k views &bull; 2days</p>
-                      </div>
-              </div>
-        </div>
-
-
-        <div class="vid-list">
-            <a href="video 4.html"><img src="./photo/38.jpg" class ="thumbnail1"></a>
-               <div class="whole">
-                    <img src="./photo/Jack.png">
-                      <div class="vid-info">
-                          <a href="">Song Meme Compilation 🔥// SARCASM EDITX 😎// Lyrics Crossover Meme 05</a>
-                          <p> Sarcasm Editx</p>
-                          <p>15k views &bull; 2days</p>
-                      </div>
-              </div>
-        </div>
-
-
-
-        <div class="vid-list">
-            <a href="video 5.html"><img src="./photo/thumbnail5.png" class ="thumbnail1"></a>
-               <div class="whole">
-                    <img src="./photo/Jack.png">
-                      <div class="vid-info">
-                          <a href="">Song Meme Compilation 🔥// SARCASM EDITX 😎// Lyrics Crossover Meme 06</a>
-                          <p> Sarcasm Editx</p>
-                          <p>15k views &bull; 2days</p>
-                      </div>
-              </div>
-        </div>
-
-
-
-        <div class="vid-list">
-            <a href="video 6.html"><img src="./photo/thumbnail2.png" class ="thumbnail1"></a>
-               <div class="whole">
-                    <img src="./photo/Jack.png">
-                      <div class="vid-info">
-                          <a href="">Song Meme Compilation 🔥// SARCASM EDITX 😎// Lyrics Crossover Meme 07</a>
-                          <p> Sarcasm Editx</p>
-                          <p>15k views &bull; 2days</p>
-                      </div>
-              </div>
-        </div>
-
-
-        <div class="vid-list">
-            <a href="video 7.html"><img src="./photo/thumbnail3.png" class ="thumbnail1"></a>
-               <div class="whole">
-                    <img src="./photo/Jack.png">
-                      <div class="vid-info">
-                          <a href="">Song Meme Compilation 🔥// SARCASM EDITX 😎// Lyrics Crossover Meme 08</a>
-                          <p> Sarcasm Editx</p>
-                          <p>15k views &bull;  2days</p>
-                      </div>
-              </div>
-        </div>
-</div>  
+        <div class="right-sidebar" id="recommended"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <footer class="foot">
-    <p>  &#169; ~ Aman Aryan </p>    
+  © 2026 ~ Aman Aryan | College Year Project
 </footer>
 
-
 <script src="script.js"></script>
-
-
-
-
 </body>
 </html>
