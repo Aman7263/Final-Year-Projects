@@ -122,32 +122,7 @@ if (themeToggle) {
 }
 
 // ================= AUTO VIDEO FILE LIST =================
-
-// 🔹 Numbered Videos (45–66)
 const videoFiles = [
-  "45.mp4",
-  "46.mp4",
-  "47.mp4",
-  "48.mp4",
-  "49.mp4",
-  "50.mp4",
-  "51.mp4",
-  "52.mp4",
-  "53.mp4",
-  "54.mp4",
-  "55.mp4",
-  "56.mp4",
-  "57.mp4",
-  "58.mp4",
-  "59.mp4",
-  "60.mp4",
-  "61.mp4",
-  "62.mp4",
-  "63.mp4",
-  "64.mp4",
-  "65.mp4",
-  "66.mp4",
-
   // 🔹 Named Videos
   "ABCD_Yaariyan_Song_Meme_Compilation.mp4",
   "Baby_Ko_Bass_Pasand_Hai_Song_Meme_Compilation.mp4",
