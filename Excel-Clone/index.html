@@ -9,12 +9,55 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <meta name="google-adsense-account" content="ca-pub-6814079272498306">
-
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6814079272498306"
 crossorigin="anonymous"></script>
 
+<style>
+/* Fixed Side Ads */
+.ads-left, .ads-right {
+    position: fixed;
+    top: 150px;
+    width: 120px;
+    z-index: 9999;
+}
+
+.ads-left { left: 0; }
+.ads-right { right: 0; }
+
+/* Bottom Ad */
+.ads-bottom {
+    display: block;
+    text-align: center;
+    margin: 30px auto 0;
+}
+
+/* Hide side ads on mobile */
+@media (max-width: 900px) {
+    .ads-left, .ads-right { display: none; }
+}
+</style>
 </head>
 <body>
+
+<!-- Left Ad -->
+<div class="ads-left">
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6814079272498306"
+     data-ad-slot="5829190376"
+     data-ad-format="auto"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- Right Ad -->
+<div class="ads-right">
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6814079272498306"
+     data-ad-slot="5829190376"
+     data-ad-format="auto"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
 <header class="toolbar">
     <div class="toolbar-left">
@@ -60,29 +103,36 @@ crossorigin="anonymous"></script>
     <canvas id="chartCanvas"></canvas>
 </section>
 
- <div style="
+<div style="
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 30px 0;
 ">
+    <button onclick="window.location.href='../index.html'" style="
+        background: black;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    " onmouseover="this.style.background='#444'" onmouseout="this.style.background='black'">
+        ⬅ Back to Home
+    </button>
+</div>
 
-        <button onclick="window.location.href='../index.html'" style="
-            background: black;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        " onmouseover="this.style.background='#444'" onmouseout="this.style.background='black'">
-
-            ⬅ Back to Home
-
-        </button>
-
-    </div>
+<!-- Bottom Ad -->
+<div class="ads-bottom">
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-client="ca-pub-6814079272498306"
+     data-ad-slot="5829190376"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
 <script src="app.js"></script>
 </body>

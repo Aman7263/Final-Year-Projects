@@ -11,16 +11,58 @@
     <link rel="stylesheet" href="kanban.css">
 
     <meta name="google-adsense-account" content="ca-pub-6814079272498306">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6814079272498306"
+    crossorigin="anonymous"></script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6814079272498306"
-crossorigin="anonymous"></script>
+    <style>
+        /* Fixed Side Ads */
+        .ads-left, .ads-right {
+            position: fixed;
+            top: 150px;
+            width: 120px;
+            z-index: 9999;
+        }
+        .ads-left { left: 0; }
+        .ads-right { right: 0; }
 
+        /* Bottom Ad */
+        .ads-bottom {
+            display: block;
+            text-align: center;
+            margin: 30px auto 0;
+        }
+
+        /* Hide side ads on small screens */
+        @media (max-width: 900px) {
+            .ads-left, .ads-right { display: none; }
+        }
+    </style>
 </head>
 <body>
+
+<!-- Left Ad -->
+<div class="ads-left">
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6814079272498306"
+     data-ad-slot="5829190376"
+     data-ad-format="auto"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- Right Ad -->
+<div class="ads-right">
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6814079272498306"
+     data-ad-slot="5829190376"
+     data-ad-format="auto"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
 <h1>🎮 Gamified Kanban Board</h1>
 <div class="top-bar">
     <h3 id="scoreDisplay">🏆 Score: 0</h3>
-
     <button class="reset-btn" onclick="resetGame()">
         <i class="fa-solid fa-rotate-right"></i> Reset
     </button>
@@ -61,15 +103,12 @@ crossorigin="anonymous"></script>
 <div id="taskModal" class="modal">
     <div class="modal-content">
         <h3>Add New Task</h3>
-
         <input type="text" id="taskInput" placeholder="Enter task..." />
-
         <select id="prioritySelect">
             <option value="high">High Priority</option>
             <option value="medium" selected>Medium Priority</option>
             <option value="low">Low Priority</option>
         </select>
-
         <div class="modal-actions">
             <button onclick="addTask()">Add Task</button>
             <button class="cancel" onclick="closeModal()">Cancel</button>
@@ -81,9 +120,7 @@ crossorigin="anonymous"></script>
 <div id="remarkModal" class="modal">
     <div class="modal-content">
         <h3>Save Remark</h3>
-
         <textarea id="remarkInput" placeholder="Enter your remark..." rows="4"></textarea>
-
         <div class="modal-actions">
             <button onclick="saveRemark()">Save</button>
             <button class="cancel" onclick="closeRemarkModal()">Cancel</button>
@@ -91,29 +128,36 @@ crossorigin="anonymous"></script>
     </div>
 </div>
 
- <div style="
+<div style="
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 30px 0;
 ">
+    <button onclick="window.location.href='../index.html'" style="
+        background: black;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    " onmouseover="this.style.background='#444'" onmouseout="this.style.background='black'">
+        ⬅ Back to Home
+    </button>
+</div>
 
-        <button onclick="window.location.href='../index.html'" style="
-            background: black;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        " onmouseover="this.style.background='#444'" onmouseout="this.style.background='black'">
-
-            ⬅ Back to Home
-
-        </button>
-
-    </div>
+<!-- Bottom Ad -->
+<div class="ads-bottom">
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-client="ca-pub-6814079272498306"
+     data-ad-slot="5829190376"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
 <script src="kanban.js"></script>
 </body>
